@@ -6,11 +6,11 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = '1IsADqg8fXvZAUNpNeetzIam6q4g_AM8TEHls0zkKa_o'
-SAMPLE_RANGE_NAME = 'github'
+SAMPLE_SPREADSHEET_ID = ''
+SAMPLE_RANGE_NAME = 'github!A1:H1'
 
 def main():
     """Shows basic usage of the Sheets API.
@@ -53,20 +53,17 @@ def main():
 
     # Update
     valuesToUpdate = [
-    [
-        'adwad','dawada','zzzz','qqqq'
-    ],
-    # Additional rows ...
+        ['dawda,qsq,qsqs',23,1,4,5,6,7,8],
+        ['','','awdad',23,23,2]
     ]
     body = {
         'values': valuesToUpdate
     }
-    results = service.spreadsheets().values().update(
+    results = service.spreadsheets().values().append(
         spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME,
-         valueInputOption='RAW',
+        valueInputOption='USER_ENTERED',
+        insertDataOption='INSERT_ROWS',
         body=body).execute()
-    print('{0} cells updated.'.format(results.get('updatedCells')))
-
 
 
 if __name__ == '__main__':

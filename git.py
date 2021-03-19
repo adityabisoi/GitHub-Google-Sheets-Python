@@ -17,23 +17,25 @@ repos_collaborators_permissions={}  #permission level of each collaborator
 
 for repo in g.get_user().get_repos():   # Get the repos
     repos_branches[repo.full_name]=list(repo.get_branches())    # store repo name: list of its branches in dict
-    repos_status[repo.full_name]=repo.private   # store repo name: its status in dict
+    repos_status[repo.full_name]='private' if repo.private else 'public'   # store repo name: its status in dict
 
 for i in repos_branches.keys():
     x=[]    # Initialize empty list
     for j in repos_branches[i]:     # Iterate through every repo's branches
         get_b = g.get_repo(i).get_branch(j.name)    # Fetch properties of each branch
-        x.append(get_b.protected)   # Append if protected on not, False if not protected
+        x.append('Protected' if get_b.protected else 'Not Protected')   # Append if protected on not, False if not protected
     repos_protected[i]=x    # store repo name: protected or not for each of its branch
     
 
 for i in repos_branches.keys():
     get_collab=g.get_repo(i).get_collaborators()    # get all collaborators of the repo
     arr=[]
+    a=[]
     with suppress(Exception):   # To suppress 404 Not Found exception with ottosero/training-l1 repo
         for j in get_collab:
-            repos_collaborators[i]=j.login    # store repo name: username in dict
+            a.append(j.login)
             arr.append(g.get_repo(i).get_collaborator_permission(j.login))
+    repos_collaborators[i]=a    # store repo name: username in dict
     repos_collaborators_permissions[i]=arr     # store repo name: permissions of each user in dict
 
 
