@@ -3,5 +3,6 @@ A Python application to fetch data from GitHub and populate a Google Sheet using
 
 ## Installation
 * Create a python virtual environment (recommended)
+* Run `pip install -r requirements.txt` to install required modules
 * Enter credentials in `.env.example` and change the name to `.env`
 * Run `python git.py` to run the script
